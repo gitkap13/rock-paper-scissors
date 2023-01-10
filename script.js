@@ -1,4 +1,12 @@
 
+let winCount = 0
+let loseCount = 0
+let drawCount = 0
+const buttons = document.querySelector('#buttons')
+const results = document.querySelector('#results')
+const score = document.querySelector('#score')
+score.textContent = `Wins: ${winCount}, Losses: ${loseCount}, Draws: ${drawCount}`
+
 function getComputerChoice() {
     let getIntValue = Math.floor(Math.random() * 3) + 1
     if (getIntValue === 1) {
@@ -12,19 +20,19 @@ function getComputerChoice() {
     }
 }
 
-
-
-function playGame() {
-    let winCount = 0
-    let loseCount = 0
-    let drawCount = 0
-
-    function playRound(playerSelection, computerSelection) {
-        playerSelection = prompt("Rock, paper, or scissors?")
-        computerSelection = getComputerChoice()
-        let drawMessage = "It's a draw!"
-        let winningMessage = `You win! ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection}.`
-        let losingMessage = `You lose! ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection}.`
+function playRound(playerSelection, computerSelection) {
+    computerSelection = getComputerChoice()
+    let drawMessage = "It's a draw!"
+    let winningMessage = `You win! ${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} beats ${computerSelection}.`
+    let losingMessage = `You lose! ${computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1)} beats ${playerSelection}.`
+    let final_result = ""
+    if (winCount => 5) {
+        final_result = "You win!"
+    }
+    else if (loseCount => 5) {
+        final_result = "You lose!"
+    }
+    if (winCount < 5 && loseCount < 5) {
         if (playerSelection === computerSelection) {
             ++drawCount;
             return drawMessage
@@ -63,12 +71,12 @@ function playGame() {
             return "Invalid input. Please try again."
         }
     }
-
-    for (let i = 0; i < 5; i++) { 
-        console.log(playRound())
-    };
-
-    return `Final score: You: ${winCount} Computer: ${loseCount} Draw: ${drawCount}`
+    else {
+        return `Game over! ${final_result}`
+    }
 }
 
-console.log(playGame())
+buttons.addEventListener('click', function(e) {
+    results.textContent = playRound(e.target.id);
+    score.textContent = `Wins: ${winCount}, Losses: ${loseCount}, Draws: ${drawCount}`
+})
